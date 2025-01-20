@@ -1,5 +1,8 @@
 import networkx as nx
 
+#need to import pythons queue module (tipp from chatgpt)
+from collections import deque
+
 class Graph:
     """
     Class to contain a graph and your bfs function
@@ -21,6 +24,26 @@ class Graph:
         * If there is an end node input and a path does not exist, return None
 
         """
+        #initializing a queue
+        Q = deque()
+        visited = []
+        #Q.append() is used from deque module
+        Q.append(start)
+        visited.append(start)
+        #while Q is not empty
+        while Q:
+            #removes the first (oldest) element that was added to the queue, that's why it's called first in first out
+            v = Q.popleft()
+            #accessing the adjacency list of the graph, get neighbors of the graph
+            N = self.graph[v]
+            #checking
+            print(N)
+            for node in N:
+                if node not in visited: 
+                    visited.append(node)
+                    #add an element to the queue
+                    Q.append(node)
+
         return
 
 

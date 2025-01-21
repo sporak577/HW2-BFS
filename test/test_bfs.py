@@ -1,8 +1,15 @@
 # write tests for bfs
-import pytest
-from search import graph
+import pytest 
+from search import Graph
 
-def test_bfs_traversal():
+def test_graph():
+    """load the graph before testing."""
+    return Graph("data/tiny_network.adjlist") #instance of graph, instance is an object belonging to the Graph class
+
+def test_graph_2():
+    return Graph("data/citation_network.adjlist")
+
+def test_bfs_traversal(test_graph):
     """
     TODO: Write your unit test for a breadth-first
     traversal here. Create an instance of your Graph class 
@@ -10,9 +17,16 @@ def test_bfs_traversal():
     that all nodes are being traversed (ie. returns 
     the right number of nodes, in the right order, etc.)
     """
+    #picking a start node
+    start_node = '31806696'
+    bfs_result = test_graph.bfs(start_node)
+    expected_nodes = {"31806696" , "Luke Gilbert"}
+    assert set(expected_nodes).issubset(set(bfs_result))
+    
+
     pass
 
-def test_bfs():
+def test_bfs(test_graph_2):
     """
     TODO: Write your unit test for your breadth-first 
     search here. You should generate an instance of a Graph

@@ -4,12 +4,6 @@ from search.graph import Graph
 import networkx as nx
 
 """I received help from Isaiah Hazelwood, Biophysics PhD Student"""
-def test_graph():
-    """load the graph before testing."""
-    return Graph("data/tiny_network.adjlist") #instance of graph, instance is an object belonging to the Graph class
-
-def test_graph_2():
-    return Graph("data/citation_network.adjlist")
 
 
 def test_bfs_traversal(test_graph):
@@ -23,7 +17,8 @@ def test_bfs_traversal(test_graph):
     #check if BFS traverses the entire graph 
 
     #breadth first search to traverse this network
-    G_tiny = graph.Graph("./data/tiny_network.adjlist")
+    
+    G_tiny = Graph("./data/tiny_network.adjlist")
     #this runs bfs from "lani wu" and collects the traversal order
     lani_wu_traverse = G_tiny.bfs("Lani Wu", end=None)
     #there are a total of 30 nodes, here I check if this holds true
@@ -45,17 +40,16 @@ def test_bfs_traversal(test_graph):
         toni_capra_traverse = G_tiny.bfs("Toni Capra", end=None)
     
     #test bfs on an empty graph
-    G_empty = graph.Graph("./data/empty_network.adjlist")
+    G_empty = Graph("./data/empty_network.adjlist")
     assert len(list(G_empty.graph.nodes)) == 0
     assert len(list(G_empty.graph.edges)) == 0
-
     with pytest.raises(KeyError):
         #raises key error
         nonexistent_traverse = G_empty.bfs("Nonexistent Node", end=None)
     
     #one edge case would be bfs with same start and end, should traverse without infinite loop
     def test_bfs_same_start_and_end():
-        G_cyclic = graph.Graph("./data/cyclic_tiny_network.adjlist")
+        G_cyclic = Graph("./data/cyclic_tiny_network.adjlist")
         cycle_traverse = G_cyclic.bfs("1", end=None) #star bfs from node 1
 
         expected_order = ["1", "2", "3", "4", "5", "6"]
@@ -63,7 +57,7 @@ def test_bfs_traversal(test_graph):
         assert cycle_traverse == expected_order 
 
     def test_bfs_unconnected_nodes():
-        G_self = graph.Graph("./data/unconnected_nodes.adjlist")
+        G_self = Graph("./data/unconnected_nodes.adjlist")
         self_traverse = G_self("1", end=None)
 
         expected_result = ["1"]
@@ -86,40 +80,34 @@ def test_bfs(test_graph_2):
     which should return None. 
     """
     #load the citation network graph 
-    G_citation = graph.Graph("./data/citation_network.adjlist")
+    
+    G_citation = Graph("./data/citation_network.adjlist")
 
     #traverse from one node to another, verify the shortest path is found
 
-    G_Michael_Keiser = G_citation.bfs("Michael Keiser", end = "Marina Sirota")
-    assert G_Tony_Joe in list(nx.all_shortest_paths(G_citation.graph, source="Tony Capra", target="Joseph DeRisi"))
+    shortest_paths = list(nx.all_shortest_paths(G_citation.graph, source="Tony Capra", target="Joseph DeRisi"))
+    assert G_citation.bfs("Tony Capra", "Joseph DeRisi") in shortest_paths  
 
     #test BFS on an empty graph 
-    G_empty = graph.Graph("./data/empty_citation.adjlist")
+    G_empty = Graph("./data/empty_citation.adjlist")
     with pytest.raises(KeyError):
         nonexistent_traverse = G_empty.bfs("Nonexistent Node", end="Nonexistent Node 2")
 
     #test BFS on a disconnected graph
-    G_disconnected = graph.Graph("./data/unconnected_nodes.adjlist")
+    G_disconnected = Graph("./data/unconnected_nodes.adjlist")
     with pytest.raises(KeyError):
-        disconnected_traverse = G_disconnected("Disconnected Traverse", source="1", target="None")
+        disconnected_traverse = G_disconnected.bfs("1", end="None")
     
     #test BFS in a cyclic graph
-    G_cycle = graph.Graph("./data/cycle_network.adjlist")
+    G_cycle = Graph("./data/cycle_network.adjlist")
     search_1_3 = G_cycle.bfs("1", end="3")
     assert search_1_3 == ["1", "2", "3"]
 
     #test bfs when start == end 
-    G_self = graph.Graph("./data/unconnected_nodes.adjlist")
+    G_self = Graph("./data/unconnected_nodes.adjlist")
     search_1_1 = G_self.bfs("1", end="1")
     assert search_1_1 == ["1"]
     
-
-
-
-    
-
-
-
 
 
 

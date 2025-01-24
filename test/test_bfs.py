@@ -1,15 +1,15 @@
 # write tests for bfs
 import pytest 
-from search import Graph
+from search.graph import Graph
 import networkx as nx
 
 """I received help from Isaiah Hazelwood, Biophysics PhD Student"""
 def test_graph():
     """load the graph before testing."""
-    return graph("data/tiny_network.adjlist") #instance of graph, instance is an object belonging to the Graph class
+    return Graph("data/tiny_network.adjlist") #instance of graph, instance is an object belonging to the Graph class
 
 def test_graph_2():
-    return graph("data/citation_network.adjlist")
+    return Graph("data/citation_network.adjlist")
 
 
 def test_bfs_traversal(test_graph):

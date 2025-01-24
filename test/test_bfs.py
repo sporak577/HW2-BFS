@@ -99,7 +99,7 @@ def test_bfs(test_graph_2):
         nonexistent_traverse = G_empty.bfs("Nonexistent Node", end="Nonexistent Node 2")
 
     #test BFS on a disconnected graph
-    G_disconnected = graph.Graph("./data/unconnected_nodes.adjilist")
+    G_disconnected = graph.Graph("./data/unconnected_nodes.adjlist")
     with pytest.raises(KeyError):
         disconnected_traverse = G_disconnected("Disconnected Traverse", source="1", target="None")
     

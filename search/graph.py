@@ -24,8 +24,6 @@ class Graph:
         * If there is an end node input and a path does not exist, return None
 
         """
-
-        """BFS traversal"""
         #initializing a queue
         Q = deque([start])
         #using a set because it only allows unique elements, no duplicates. faster processing. 

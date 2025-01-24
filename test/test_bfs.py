@@ -1,6 +1,8 @@
 # write tests for bfs
 import pytest 
 from search import Graph
+import networkx as nx
+
 """I received help from Isaiah Hazelwood, Biophysics PhD Student"""
 def test_graph():
     """load the graph before testing."""
@@ -69,12 +71,6 @@ def test_bfs_traversal(test_graph):
         assert self_traverse == expected_result
 
 
-
-
-    
-    
-
-
     pass
 
 def test_bfs(test_graph_2):
@@ -89,5 +85,43 @@ def test_bfs(test_graph_2):
     Include an additional test for nodes that are not connected 
     which should return None. 
     """
-    start_node = 
+    #load the citation network graph 
+    G_citation = graph.Graph("./data/citation_network.adjlist")
+
+    #traverse from one node to another, verify the shortest path is found
+
+    G_Michael_Keiser = G_citation.bfs("Michael Keiser", end = "Marina Sirota")
+    assert G_Tony_Joe in list(nx.all_shortest_paths(G_citation.graph, source="Tony Capra", target="Joseph DeRisi"))
+
+    #test BFS on an empty graph 
+    G_empty = graph.Graph("./data/empty_citation.adjlist")
+    with pytest.raises(KeyError):
+        nonexistent_traverse = G_empty.bfs("Nonexistent Node", end="Nonexistent Node 2")
+
+    #test BFS on a disconnected graph
+    G_disconnected = graph.Graph("./data/unconnected_nodes.adjilist")
+    with pytest.raises(KeyError):
+        disconnected_traverse = G_disconnected("Disconnected Traverse", source="1", target="None")
+    
+    #test BFS in a cyclic graph
+    G_cycle = graph.Graph("./data/cycle_network.adjlist")
+    search_1_3 = G_cycle.bfs("1", end="3")
+    assert search_1_3 == ["1", "2", "3"]
+
+    #test bfs when start == end 
+    G_self = graph.Graph("./data/unconnected_nodes.adjlist")
+    search_1_1 = G_self.bfs("1", end="1")
+    assert search_1_1 == ["1"]
+    
+
+
+
+    
+
+
+
+
+
+
+
     pass

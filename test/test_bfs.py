@@ -1,6 +1,6 @@
 # write tests for bfs
 import pytest 
-from search import Graph
+from search import graph
 import networkx as nx
 
 """I received help from Isaiah Hazelwood, Biophysics PhD Student"""
